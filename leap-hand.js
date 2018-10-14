@@ -17,8 +17,10 @@ controller.on('deviceDisconnected', function () {
     console.log("A Leap device has been disconnected.");
 });
 
-var fingerStream = rxjs.fromEvent(controller, 'deviceFrame')
-    .pipe(operators.throttleTime(1000))
+// EXPORT
+module.exports = function createFingerStream(throttleTime) {
+    return rxjs.fromEvent(controller, 'deviceFrame')
+    .pipe(operators.throttleTime(throttleTime))
     .pipe(operators.map(frame => {
         var hand = frame.hands.find(h => h.type === 'right');
         if (!hand) return [];
@@ -33,10 +35,7 @@ var fingerStream = rxjs.fromEvent(controller, 'deviceFrame')
             getFingerAngle(hand.pinky)
         ];
     }));
-
-// EXPORT
-module.exports = fingerStream;
-
+};
 
 controller.connect();
 

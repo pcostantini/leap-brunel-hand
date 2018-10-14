@@ -1,4 +1,5 @@
-var fingers = require('./leap-hand');
+var fingers = require('./leap-hand')(1000);
+var beetrootCsv = require('./beetroot-serial-controller')('/dev/ttyACM0');
 
 var thumbThresholds = [17, 83];
 var fingerThresholds = [30, 125];
@@ -14,14 +15,16 @@ fingers.subscribe(fingers => {
 
     var brunelValues = percents.map(to(brunelThresholds));
 
-    // TODO: Send to Brunel as CSV
-    var brunelCsv = brunelValues.join(',')
-
     console.log({
         fingers,
         percents,
         brunelValues
     });
+
+
+    // TODO: Send to Brunel as CSV
+    var brunelCsv = brunelValues.join(',')
+    beetrootCsv.write(brunelCsv);
 });
 
 
