@@ -1,4 +1,5 @@
-var fingers = require('./leap-hand')(1000);
+var refreshSpeed = 1000;
+var fingers = require('./leap-hand')(refreshSpeed);
 var beetrootCsv = require('./beetroot-serial-controller')('/dev/ttyACM0');
 
 var thumbThresholds = [17, 83];
@@ -22,8 +23,9 @@ fingers.subscribe(fingers => {
     });
 
 
-    // TODO: Send to Brunel as CSV
+    // Send to Brunel as CSV (activate A4 mode)
     var brunelCsv = brunelValues.join(',')
+    console.log('Brunel CSV: ', brunelCsv);
     beetrootCsv.write(brunelCsv);
 });
 
