@@ -5,6 +5,7 @@ module.exports = function (device) {
     var port = new SerialPort(
         device/*'/dev/ttyACM0'*/,
         {
+            autoOpen: true,
             baudRate: 115200,
             parser: new SerialPort.parsers.Readline("\r")
         },
@@ -33,7 +34,7 @@ module.exports = function (device) {
 
     return {
         write: function (msg) {
-            port.write(msg, (err) => {
+            port.write(msg + '\r', (err) => {
                 if (!err) return;
                 console.log('Port write error:', err);
             })
