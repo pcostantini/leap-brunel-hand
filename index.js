@@ -1,4 +1,4 @@
-var refreshSpeed = 1000;
+var refreshSpeed = 100;
 var fingers = require('./leap-hand')(refreshSpeed);
 var beetrootCsv = require('./beetroot-serial-controller')('/dev/ttyACM0');
 
