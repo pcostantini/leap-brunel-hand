@@ -20,17 +20,10 @@ module.exports = function (device) {
     });
 
     // Init CSV Mode
-    // port.write('A10', (err) => {
-    //     if (err) {
-    //         console.log('A10 write error:', err);
-    //         return;
-    //     }
-
-    //     port.write('A4', (err) => {
-    //         if (!err) return;
-    //         console.log('A10 write error:', err);
-    //     })
-    // })
+    // port.write('A4', (err) => {
+    //     if (!err) return;
+    //     console.log('A10 write error:', err);
+    // });
 
     return {
         write: function (msg) {
