@@ -28,7 +28,7 @@ module.exports = function createFingerStream(throttleTime) {
         // console.log([bone1.direction(), bone2.direction()])
 
         return [
-            getFingerAngle(hand.thumb),
+            getThumbExtended(hand.thumb),
             getFingerAngle(hand.indexFinger),
             getFingerAngle(hand.middleFinger),
             getFingerAngle(hand.ringFinger),
@@ -38,6 +38,10 @@ module.exports = function createFingerStream(throttleTime) {
 };
 
 controller.connect();
+
+function getThumbExtended(thumb) {
+    return thumb.extended;
+}
 
 function getFingerAngle(finger) {
     var bone1 = finger.proximal;

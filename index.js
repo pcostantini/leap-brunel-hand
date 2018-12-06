@@ -2,7 +2,7 @@ var refreshSpeed = 1000;
 var fingers = require('./leap-hand')(refreshSpeed);
 var beetrootCsv = require('./beetroot-serial-controller')('/dev/ttyACM0');
 
-var thumbThresholds = [17, 83];
+var thumbThresholds = [true, false];
 var fingerThresholds = [30, 125];
 var brunelThresholds = [50, 973]
 
@@ -10,17 +10,19 @@ fingers.subscribe(fingers => {
     if (!fingers.length) return;
 
     var thumb = from(thumbThresholds)(fingers[0]);
+
+    // In the Brunel hand, the pinky and ring fingers are controllers by the same servo
     var otherLessPinky = fingers.slice(1, 4).map(from(fingerThresholds));
 
     var percents = [thumb].concat(otherLessPinky);
 
     var brunelValues = percents.map(to(brunelThresholds));
 
-    console.log({
+    console.log(JSON.stringify({
         fingers,
         percents,
         brunelValues
-    });
+    }));
 
 
     // Send to Brunel as CSV (activate A4 mode)
